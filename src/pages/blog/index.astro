@@ -1,28 +1,27 @@
 ---
-// src/pages/blog/index.astro
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
 const posts = (await getCollection('blog', ({ data }) => !data.draft))
   .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 ---
-<BaseLayout title="Blog" description="Blog posts">
-  <section class="page-header">
-    <h1>Blog</h1>
-    <p>Posts, projects, notes, and things I am learning in public.</p>
-  </section>
+<BaseLayout title="Blog" description="My blog posts">
+  <section class="post">
+    <header class="post-header">
+      <h1>Blog</h1>
+      <p class="post-description">Projects, notes, and lessons learned while building in public.</p>
+    </header>
 
-  <div class="post-list">
-    {posts.map((post) => (
-      <article class="list-card">
-        <a href={`/blog/${post.slug}/`}>
-          <h2>{post.data.title}</h2>
-          {post.data.description && <p>{post.data.description}</p>}
-          <span class="post-meta">
-            {post.data.date.toLocaleDateString('en-GB')}
-          </span>
-        </a>
-      </article>
-    ))}
-  </div>
+    <div class="stack-list">
+      {posts.map((post) => (
+        <article class="list-item">
+          <a href={`/blog/${post.id}/`}>
+            <h2>{post.data.title}</h2>
+            {post.data.description && <p class="meta">{post.data.description}</p>}
+            <p class="post-meta">{post.data.date.toLocaleDateString('en-GB')}</p>
+          </a>
+        </article>
+      ))}
+    </div>
+  </section>
 </BaseLayout>

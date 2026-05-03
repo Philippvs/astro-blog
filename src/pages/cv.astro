@@ -1,0 +1,277 @@
+---
+import '../styles/global.css';
+
+const person = {
+  name: 'Philipp von Spinn',
+  role: 'Software Engineer',
+  location: 'Austria, Innsbruck',
+  phone: '+39 3458431018',
+  email: 'philipp.von.spinn@gmail.com',
+  birthYear: '1997',
+  summary:
+    'Software Engineer with a strong focus on Java and Spring Boot. Several years of experience developing cloud-ready backend applications in agile teams. Strong emphasis on stable backend architectures, system integration, and CI/CD pipelines.',
+};
+
+const skills = [
+  'Java',
+  'Spring Boot',
+  'Hibernate',
+  'SQL',
+  'React',
+  'Angular',
+  'TypeScript',
+  'Docker',
+  'CI/CD',
+  'Cloud',
+  'Git',
+  'Scrum',
+  'Kanban',
+];
+
+const experience = [
+  {
+    role: 'Fullstack Software Engineer',
+    company: 'eMundo / Gofore',
+    period: '07/2019 - Present',
+    points: [
+      'Development and optimization of Java and Spring Boot backends to implement customer-specific requirements.',
+      'Design and implementation of REST APIs, business logic, and PostgreSQL data models.',
+      'Technical responsibility for the integration and synchronization of data flows between internal and external systems.',
+      'Setup and operation of CI/CD pipelines, including automated testing and deployments.',
+      'Contribution to frontend features using React and Angular.',
+    ],
+  },
+];
+
+const education = [
+  {
+    degree: "Master's Degree: Software Engineering",
+    school: 'University of Innsbruck',
+    period: '09/2020 - 10/2024',
+  },
+  {
+    degree: "Bachelor's Degree: Computer Science",
+    school: 'University of Innsbruck',
+    period: '09/2016 - 07/2020',
+  },
+  {
+    degree: 'High School Diploma (Matura): Electronics and Electrical Engineering',
+    school: 'Technological Upper Secondary School, Merano',
+    period: '09/2011 - 07/2016',
+  },
+];
+
+const certifications = [
+  {
+    title: 'iSAQB: CPSA',
+    detail: 'Certified Professional for Software Architecture Foundation Level',
+  },
+];
+
+const languages = [
+  { name: 'German', level: 'Native' },
+  { name: 'Italian', level: 'Good working knowledge' },
+  { name: 'English', level: 'Very good working knowledge' },
+];
+
+const interests = [
+  'Self-improvement and personal development',
+  'Health and sports',
+];
+---
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{person.name} | CV</title>
+    <meta
+      name="description"
+      content="CV page for Philipp von Spinn with experience, education, certifications, languages, and skills."
+    />
+  </head>
+  <body>
+    <main class="page-shell cv-page">
+      <a class="back-link" href={`${import.meta.env.BASE_URL}`}>← Back to home</a>
+
+      <section class="cv-layout">
+        <aside class="cv-sidebar panel">
+          <section class="cv-section">
+            <h2>Contact</h2>
+            <ul class="contact-list">
+              <li>{person.location}</li>
+              <li>{person.phone}</li>
+              <li><a href={`mailto:${person.email}`}>{person.email}</a></li>
+              <li>{person.birthYear}</li>
+            </ul>
+          </section>
+
+          <section class="cv-section">
+            <h2>Profile</h2>
+            <p>{person.summary}</p>
+          </section>
+
+          <section class="cv-section">
+            <h2>Core skills</h2>
+            <ul class="skill-list">
+              {skills.map((skill) => <li>{skill}</li>)}
+            </ul>
+          </section>
+        </aside>
+
+        <section class="cv-main panel">
+          <header class="cv-header">
+            <p class="eyebrow">Curriculum Vitae</p>
+            <h1>{person.name}</h1>
+            <p class="lead">{person.role}</p>
+          </header>
+
+          <section class="cv-section">
+            <h2>Professional experience</h2>
+            {experience.map((job) => (
+              <article class="timeline-item">
+                <h3>{job.role}: {job.company}</h3>
+                <p class="meta">{job.period}</p>
+                <ul>
+                  {job.points.map((point) => <li>{point}</li>)}
+                </ul>
+              </article>
+            ))}
+          </section>
+
+          <section class="cv-section">
+            <h2>Education</h2>
+            <div class="stack-list">
+              {education.map((entry) => (
+                <article class="list-item compact">
+                  <h3>{entry.degree}</h3>
+                  <p>{entry.school}</p>
+                  <p class="meta">{entry.period}</p>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <section class="cv-section two-col">
+            <div>
+              <h2>Certifications</h2>
+              {certifications.map((cert) => (
+                <article class="mini-block">
+                  <h3>{cert.title}</h3>
+                  <p>{cert.detail}</p>
+                </article>
+              ))}
+            </div>
+
+            <div>
+              <h2>Languages</h2>
+              <div class="stack-list small-gap">
+                {languages.map((language) => (
+                  <article class="mini-block">
+                    <h3>{language.name}</h3>
+                    <p>{language.level}</p>
+                  </article>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          <section class="cv-section">
+            <h2>Interests</h2>
+            <ul>
+              {interests.map((interest) => <li>{interest}</li>)}
+            </ul>
+          </section>
+        </section>
+      </section>
+    </main>
+  </body>
+</html>
+
+<style>
+  .cv-page {
+    padding-top: var(--space-6);
+  }
+
+  .back-link {
+    display: inline-flex;
+    margin-bottom: var(--space-4);
+    color: var(--color-primary);
+    font-weight: 700;
+  }
+
+  .cv-layout {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: var(--space-6);
+  }
+
+  .cv-sidebar {
+    background: #dfecef;
+  }
+
+  .cv-sidebar,
+  .cv-main {
+    padding: var(--space-6);
+  }
+
+  .cv-header {
+    margin-bottom: var(--space-8);
+  }
+
+  .cv-section + .cv-section {
+    margin-top: var(--space-8);
+  }
+
+  .contact-list,
+  .skill-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .contact-list li,
+  .skill-list li {
+    margin-bottom: var(--space-3);
+  }
+
+  .skill-list li::before {
+    content: '•';
+    color: var(--color-primary);
+    margin-right: 0.5rem;
+  }
+
+  .timeline-item ul {
+    margin-top: var(--space-3);
+  }
+
+  .timeline-item li + li,
+  .cv-main li + li {
+    margin-top: var(--space-2);
+  }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-6);
+  }
+
+  .compact {
+    padding: var(--space-4);
+  }
+
+  .mini-block + .mini-block {
+    margin-top: var(--space-4);
+  }
+
+  .small-gap {
+    gap: var(--space-3);
+  }
+
+  @media (max-width: 900px) {
+    .cv-layout,
+    .two-col {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

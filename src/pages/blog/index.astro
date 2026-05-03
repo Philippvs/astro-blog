@@ -18,7 +18,7 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
     <div class="stack-list">
       {posts.map((post) => (
         <article class="list-item">
-          <a href={withBase(`blog/${post.slug}`)}>
+          <a href={withBase(`blog/${post.id}/`)}>
             <h2>{post.data.title}</h2>
             {post.data.description && <p class="meta">{post.data.description}</p>}
             <p class="post-meta">{post.data.date.toLocaleDateString('en-GB')}</p>

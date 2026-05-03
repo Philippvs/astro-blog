@@ -1,0 +1,56 @@
+---
+// src/layouts/PostLayout.astro
+import BaseLayout from './BaseLayout.astro';
+
+interface NavItem {
+  slug: string;
+  title: string;
+}
+
+interface Props {
+  title: string;
+  description?: string;
+  date?: Date;
+  prev?: NavItem | null;
+  next?: NavItem | null;
+}
+
+const { title, description, date, prev = null, next = null } = Astro.props;
+---
+<BaseLayout title={title} description={description}>
+  <article class="post">
+    <header class="post-header">
+      <h1>{title}</h1>
+      {date && (
+        <p class="post-meta">
+          {date.toLocaleDateString('en-GB', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+          })}
+        </p>
+      )}
+      {description && <p class="post-description">{description}</p>}
+    </header>
+
+    <div class="post-content">
+      <slot />
+    </div>
+
+    <nav class="post-pagination" aria-label="Post navigation">
+      {prev ? (
+        <a class="post-card" href={`/blog/${prev.slug}`}>
+          <span class="label">Previous</span>
+          <strong>{prev.title}</strong>
+        </a>
+      ) : <div></div>}
+
+      {next ? (
+        <a class="post-card align-right" href={`/blog/${next.slug}`}>
+          <span class="label">Next</span>
+          <strong>{next.title}</strong>
+        </a>
+      ) : <div></div>}
+    </nav>
+  </article>
+</BaseLayout>

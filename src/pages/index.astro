@@ -1,17 +1,455 @@
 ---
-// Welcome to Astro! Everything between these triple-dash code fences
-// is your "component frontmatter". It never runs in the browser.
-console.log('This runs in your terminal, not the browser!');
+const site = {
+  name: 'Your Name',
+  title: 'I build projects in public and write about what I learn.',
+  intro:
+    'This site is my space to share technical projects, experiments, lessons learned, and the thinking behind what I build.',
+};
+
+const nav = [
+  { label: 'Blog', href: `${import.meta.env.BASE_URL}blog/` },
+  { label: 'CV', href: `${import.meta.env.BASE_URL}cv/` },
+  { label: 'GitHub', href: 'https://github.com/Philippvs', external: true },
+  { label: 'LinkedIn', href: 'https://www.linkedin.com/in/your-profile/', external: true },
+];
+
+const featuredProjects = [
+  {
+    title: 'Astro Blog',
+    description:
+      'A personal blog built with Astro to document projects, ideas, and progress in public.',
+    stack: 'Astro, GitHub Pages, GitHub Actions',
+    href: 'https://github.com/Philippvs/astro-blog',
+  },
+  {
+    title: 'Build in Public Journey',
+    description:
+      'An ongoing personal branding effort centered on sharing process, decisions, and lessons learned while building.',
+    stack: 'GitHub, LinkedIn, Writing',
+    href: 'https://github.com/Philippvs',
+  },
+];
+
+const latestWriting = [
+  {
+    title: 'Building my blog with Astro from my phone',
+    description: 'A practical breakdown of setting up, troubleshooting, and deploying an Astro blog without a PC.',
+    href: `${import.meta.env.BASE_URL}blog/`,
+  },
+  {
+    title: 'What I learn while building in public',
+    description: 'Notes on visibility, iteration, and sharing progress instead of only outcomes.',
+    href: `${import.meta.env.BASE_URL}blog/`,
+  },
+  {
+    title: 'Why I want my work to be visible',
+    description: 'A short reflection on using projects and writing to make skills easier to understand.',
+    href: `${import.meta.env.BASE_URL}blog/`,
+  },
+];
 ---
-<!-- Below is your "component template." It's just HTML, but with
-    some magic sprinkled in to help you build great templates. -->
-<html>
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{site.name}</title>
+    <meta
+      name="description"
+      content="Personal site built with Astro to share projects, writing, and a public build-in-public journey."
+    />
+  </head>
   <body>
-    <h1>Hello, World!</h1>
+    <main class="page-shell">
+      <header class="topbar">
+        <a class="brand" href={`${import.meta.env.BASE_URL}`}>{site.name}</a>
+        <nav class="nav">
+          {nav.map((item) => (
+            <a href={item.href} target={item.external ? '_blank' : undefined} rel={item.external ? 'noopener noreferrer' : undefined}>
+              {item.label}
+            </a>
+          ))}
+        </nav>
+      </header>
+
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">Personal website / blog</p>
+          <h1>{site.title}</h1>
+          <p class="lead">{site.intro}</p>
+
+          <div class="actions">
+            <a class="btn btn-primary" href={`${import.meta.env.BASE_URL}blog/`}>Read the blog</a>
+            <a class="btn btn-secondary" href={`${import.meta.env.BASE_URL}cv/`}>View CV</a>
+          </div>
+        </div>
+
+        <aside class="hero-card">
+          <p class="card-label">Current focus</p>
+          <h2>Building a public body of work</h2>
+          <p>
+            I am using this site to document projects, clarify how I think, and make my work easier to discover.
+          </p>
+          <ul>
+            <li>Projects and experiments</li>
+            <li>Technical writing and reflections</li>
+            <li>Visible learning in public</li>
+          </ul>
+        </aside>
+      </section>
+
+      <section class="section">
+        <div class="section-head">
+          <p class="eyebrow">Featured work</p>
+          <h2>Projects</h2>
+        </div>
+
+        <div class="card-grid">
+          {featuredProjects.map((project) => (
+            <article class="card">
+              <div class="card-top">
+                <h3>{project.title}</h3>
+                <a href={project.href} target="_blank" rel="noopener noreferrer">Open</a>
+              </div>
+              <p>{project.description}</p>
+              <p class="meta">{project.stack}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section class="section split">
+        <div>
+          <div class="section-head">
+            <p class="eyebrow">Latest writing</p>
+            <h2>Recent posts</h2>
+          </div>
+
+          <div class="stack-list">
+            {latestWriting.map((post) => (
+              <article class="list-item">
+                <h3><a href={post.href}>{post.title}</a></h3>
+                <p>{post.description}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+
+        <aside class="about-card">
+          <p class="eyebrow">About</p>
+          <h2>A simple idea</h2>
+          <p>
+            I do not want to only post finished outcomes. I want to show projects, decisions,
+            mistakes, and improvements so people can see both what I build and how I think.
+          </p>
+          <div class="mini-links">
+            <a href={`${import.meta.env.BASE_URL}cv/`}>View CV</a>
+            <a href="https://github.com/Philippvs" target="_blank" rel="noopener noreferrer">GitHub</a>
+          </div>
+        </aside>
+      </section>
+
+      <footer class="footer">
+        <p>Built with Astro and published on GitHub Pages.</p>
+        <div class="footer-links">
+          <a href={`${import.meta.env.BASE_URL}cv/`}>CV</a>
+          <a href="https://github.com/Philippvs" target="_blank" rel="noopener noreferrer">GitHub</a>
+          <a href="https://www.linkedin.com/in/your-profile/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        </div>
+      </footer>
+    </main>
   </body>
 </html>
+
 <style>
+  :root {
+    --bg: #f7f4ef;
+    --surface: rgba(255, 255, 255, 0.78);
+    --surface-strong: #ffffff;
+    --surface-soft: #efe8df;
+    --text: #1f1b18;
+    --muted: #6d645c;
+    --border: #ddd2c6;
+    --accent: #0f6d68;
+    --accent-dark: #0a504c;
+    --accent-soft: #dcebea;
+    --shadow: 0 16px 40px rgba(22, 18, 14, 0.08);
+    --radius-lg: 24px;
+    --radius-md: 18px;
+    --container: 1120px;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    color: var(--text);
+    background:
+      radial-gradient(circle at top left, rgba(15, 109, 104, 0.08), transparent 32%),
+      linear-gradient(180deg, #fbf8f3 0%, #f1ebe2 100%);
+    line-height: 1.6;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+
+  .page-shell {
+    width: min(calc(100% - 2rem), var(--container));
+    margin: 0 auto;
+    padding: 1rem 0 3rem;
+  }
+
+  .topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem 0 2rem;
+  }
+
+  .brand {
+    font-size: 1.05rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+
+  .nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .nav a {
+    color: var(--muted);
+    font-weight: 600;
+  }
+
+  .hero {
+    display: grid;
+    grid-template-columns: 1.5fr 0.95fr;
+    gap: 1.5rem;
+    align-items: stretch;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-copy,
+  .hero-card,
+  .card,
+  .about-card {
+    backdrop-filter: blur(10px);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
+  }
+
+  .hero-copy {
+    padding: 2rem;
+  }
+
+  .hero-card,
+  .about-card,
+  .card {
+    padding: 1.5rem;
+  }
+
+  .eyebrow {
+    margin: 0 0 0.85rem;
+    color: var(--accent);
+    font-size: 0.82rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  h1,
+  h2,
+  h3,
+  p {
+    margin-top: 0;
+  }
+
   h1 {
-    color: orange;
+    margin-bottom: 1rem;
+    font-size: clamp(2.4rem, 6vw, 5rem);
+    line-height: 1.02;
+    letter-spacing: -0.04em;
+    max-width: 12ch;
+  }
+
+  h2 {
+    margin-bottom: 0.9rem;
+    font-size: clamp(1.35rem, 2vw, 1.8rem);
+    line-height: 1.12;
+  }
+
+  h3 {
+    margin-bottom: 0.45rem;
+    font-size: 1.05rem;
+  }
+
+  .lead {
+    max-width: 60ch;
+    color: var(--muted);
+    font-size: 1.05rem;
+  }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.9rem;
+    margin-top: 1.5rem;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.9rem 1.1rem;
+    border-radius: 999px;
+    font-weight: 700;
+    transition: 180ms ease;
+  }
+
+  .btn:hover {
+    text-decoration: none;
+    transform: translateY(-1px);
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: white;
+  }
+
+  .btn-primary:hover {
+    background: var(--accent-dark);
+  }
+
+  .btn-secondary {
+    border: 1px solid var(--border);
+    background: var(--surface-strong);
+  }
+
+  .hero-card ul {
+    margin: 1rem 0 0;
+    padding-left: 1.15rem;
+  }
+
+  .card-label,
+  .meta {
+    color: var(--muted);
+  }
+
+  .section {
+    margin-top: 1.5rem;
+  }
+
+  .section-head {
+    margin-bottom: 1rem;
+  }
+
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+
+  .card-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .card-top a,
+  .mini-links a,
+  .footer-links a,
+  .list-item a {
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  .split {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 1.5rem;
+  }
+
+  .stack-list {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .list-item {
+    padding: 1.25rem 1.4rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    background: rgba(255, 255, 255, 0.72);
+    box-shadow: var(--shadow);
+  }
+
+  .mini-links,
+  .footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .mini-links {
+    margin-top: 1rem;
+  }
+
+  .footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 2rem;
+    padding: 1.25rem 0 0;
+    border-top: 1px solid var(--border);
+    color: var(--muted);
+  }
+
+  @media (max-width: 900px) {
+    .hero,
+    .split,
+    .card-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .page-shell {
+      width: min(calc(100% - 1rem), var(--container));
+      padding-top: 0.25rem;
+    }
+
+    .topbar,
+    .footer {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .hero-copy,
+    .hero-card,
+    .card,
+    .about-card,
+    .list-item {
+      padding: 1.2rem;
+    }
+
+    h1 {
+      max-width: 14ch;
+    }
   }
 </style>

@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import { withBase } from '../lib/paths';
 
 interface Props {
   title: string;
@@ -17,23 +18,20 @@ const { title, description = '' } = Astro.props;
     <meta name="description" content={description} />
   </head>
   <body>
-    <header class="site-header">
-      <div class="container header-inner">
-        <a href="/" class="logo">Philipp</a>
+    <div class="page-shell">
+      <header class="topbar">
+        <a href={withBase('')} class="brand">Philipp</a>
+
         <nav class="nav">
-          <a href="/">Home</a>
-          <a href="/blog">Blog</a>
-          <a href="/p/about">About</a>
+          <a href={withBase('')}>Home</a>
+          <a href={withBase('blog/')}>Blog</a>
+          <a href={withBase('cv/')}>CV</a>
         </nav>
-      </div>
-    </header>
+      </header>
 
-    <main class="container">
-      <slot />
-    </main>
-
-    <footer class="site-footer container">
-      <p>Built with Astro.</p>
-    </footer>
+      <main>
+        <slot />
+      </main>
+    </div>
   </body>
 </html>

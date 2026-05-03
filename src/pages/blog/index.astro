@@ -1,23 +1,24 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { withBase } from '../../lib/paths';
 
 const posts = (await getCollection('blog', ({ data }) => !data.draft))
   .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
-
-const base = import.meta.env.BASE_URL;
 ---
 <BaseLayout title="Blog" description="My blog posts">
   <section class="post">
     <header class="post-header">
       <h1>Blog</h1>
-      <p class="post-description">Projects, notes, and lessons learned while building in public.</p>
+      <p class="post-description">
+        Projects, notes, and lessons learned while building in public.
+      </p>
     </header>
 
     <div class="stack-list">
       {posts.map((post) => (
         <article class="list-item">
-          <a href={`${base}blog/${post.data.slug}/`}>
+          <a href={withBase(`blog/${post.slug}`)}>
             <h2>{post.data.title}</h2>
             {post.data.description && <p class="meta">{post.data.description}</p>}
             <p class="post-meta">{post.data.date.toLocaleDateString('en-GB')}</p>

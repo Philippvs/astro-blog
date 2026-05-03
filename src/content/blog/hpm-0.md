@@ -3,6 +3,7 @@ title: "My first blog post"
 description: "Why I started building this blog with Astro."
 date: 2026-05-03
 draft: false
+slug: "hpm-0"
 ---
 
 This is my first blog post.

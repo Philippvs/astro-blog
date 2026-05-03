@@ -17,7 +17,7 @@ const base = import.meta.env.BASE_URL;
     <div class="stack-list">
       {posts.map((post) => (
         <article class="list-item">
-          <a href={`${base}blog/${post.slug}/`}>
+          <a href={`${base}blog/${post.data.slug}/`}>
             <h2>{post.data.title}</h2>
             {post.data.description && <p class="meta">{post.data.description}</p>}
             <p class="post-meta">{post.data.date.toLocaleDateString('en-GB')}</p>

@@ -188,90 +188,208 @@ const interests = [
   </body>
 </html>
 
-<style>
+/* =========================
+   PAGE SETUP (A4)
+========================= */
+
+.cv-page {
+  display: flex;
+  justify-content: center;
+  padding: 40px 0;
+  background: #f4f6f8;
+}
+
+/* A4 SHELL */
+.page-shell {
+  width: 210mm;
+  min-height: 297mm;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+}
+
+/* MAIN CV GRID */
+.cv-layout {
+  display: grid;
+  grid-template-columns: 34% 66%;
+  min-height: 100%;
+}
+
+/* SIDEBAR */
+.cv-sidebar {
+  background: #eef3f6;
+  padding: 22mm 14mm;
+}
+
+/* MAIN AREA */
+.cv-main {
+  padding: 22mm 16mm;
+}
+
+/* =========================
+   TYPOGRAPHY
+========================= */
+
+h1 {
+  font-size: 28px;
+  margin: 0;
+  letter-spacing: -0.3px;
+}
+
+.lead {
+  margin-top: 4px;
+  font-size: 14px;
+  color: #444;
+}
+
+h2 {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  margin-bottom: 12px;
+  color: #111;
+}
+
+h3 {
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+p, li {
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: #222;
+}
+
+/* =========================
+   SPACING SYSTEM
+========================= */
+
+.cv-section + .cv-section {
+  margin-top: 18px;
+}
+
+/* CONTACT / SKILLS */
+.contact-list,
+.skill-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.contact-list li,
+.skill-list li {
+  margin-bottom: 6px;
+}
+
+/* Skills bullets */
+.skill-list li::before {
+  content: "•";
+  margin-right: 6px;
+  color: #2b6cb0;
+}
+
+/* EXPERIENCE */
+.timeline-item {
+  margin-bottom: 14px;
+}
+
+.timeline-item ul {
+  margin-top: 6px;
+  padding-left: 16px;
+}
+
+/* EDUCATION */
+.stack-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.meta {
+  font-size: 11px;
+  color: #666;
+}
+
+/* TWO COLUMN BLOCK */
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+/* HEADER */
+.cv-header {
+  margin-bottom: 20px;
+}
+
+.eyebrow {
+  font-size: 10px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #666;
+}
+
+/* =========================
+   LINKS / UI CLEANUP
+========================= */
+
+.back-link {
+  display: none; /* never print / optional hide on screen too */
+}
+
+/* =========================
+   PRINT OPTIMIZATION
+========================= */
+
+@media print {
+  body {
+    background: white;
+  }
+
   .cv-page {
-    padding-top: var(--space-6);
+    padding: 0;
   }
 
-  .back-link {
-    display: inline-flex;
-    margin-bottom: var(--space-4);
-    color: var(--color-primary);
-    font-weight: 700;
+  .page-shell {
+    box-shadow: none;
+    width: 100%;
+    height: auto;
   }
 
-  .cv-layout {
-    display: grid;
-    grid-template-columns: 320px 1fr;
-    gap: var(--space-6);
+  /* force clean black/white print */
+  * {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
   }
 
-  .cv-sidebar {
-    background: #dfecef;
+  /* avoid breaking sections badly */
+  .cv-section,
+  .timeline-item,
+  .stack-list {
+    break-inside: avoid;
   }
 
+  /* remove unnecessary spacing for print density */
   .cv-sidebar,
   .cv-main {
-    padding: var(--space-6);
+    padding: 15mm 12mm;
   }
+}
 
-  .cv-header {
-    margin-bottom: var(--space-8);
-  }
+/* =========================
+   MOBILE (unchanged logic)
+========================= */
 
-  .cv-section + .cv-section {
-    margin-top: var(--space-8);
-  }
-
-  .contact-list,
-  .skill-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-
-  .contact-list li,
-  .skill-list li {
-    margin-bottom: var(--space-3);
-  }
-
-  .skill-list li::before {
-    content: '•';
-    color: var(--color-primary);
-    margin-right: 0.5rem;
-  }
-
-  .timeline-item ul {
-    margin-top: var(--space-3);
-  }
-
-  .timeline-item li + li,
-  .cv-main li + li {
-    margin-top: var(--space-2);
-  }
-
+@media (max-width: 900px) {
+  .cv-layout,
   .two-col {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--space-6);
+    grid-template-columns: 1fr;
   }
 
-  .compact {
-    padding: var(--space-4);
+  .page-shell {
+    width: 100%;
   }
+}
 
-  .mini-block + .mini-block {
-    margin-top: var(--space-4);
-  }
-
-  .small-gap {
-    gap: var(--space-3);
-  }
-
-  @media (max-width: 900px) {
-    .cv-layout,
-    .two-col {
-      grid-template-columns: 1fr;
-    }
-  }
-</style>

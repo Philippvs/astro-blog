@@ -1,0 +1,54 @@
+---
+import { getCollection, render } from 'astro:content';
+import PostLayout from '../../layouts/PostLayout.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', ({ data }) => !data.draft);
+
+  const sorted = posts.sort(
+    (a, b) => b.data.date.getTime() - a.data.date.getTime()
+  );
+
+  return sorted.map((post) => ({
+    params: { slug: post.slug },
+    props: { post, allPosts: sorted }
+  }));
+}
+
+const { post, allPosts } = Astro.props;
+const { Content } = await render(post);
+
+let prev = null;
+let next = null;
+
+if (post.data.series) {
+  const seriesPosts = allPosts
+    .filter((p) => p.data.series === post.data.series)
+    .sort((a, b) => (a.data.order ?? 0) - (b.data.order ?? 0));
+
+  const currentIndex = seriesPosts.findIndex((p) => p.slug === post.slug);
+  prev = currentIndex > 0
+    ? { slug: seriesPosts[currentIndex - 1].slug, title: seriesPosts[currentIndex - 1].data.title }
+    : null;
+  next = currentIndex < seriesPosts.length - 1
+    ? { slug: seriesPosts[currentIndex + 1].slug, title: seriesPosts[currentIndex + 1].data.title }
+    : null;
+} else {
+  const currentIndex = allPosts.findIndex((p) => p.slug === post.slug);
+  prev = currentIndex < allPosts.length - 1
+    ? { slug: allPosts[currentIndex + 1].slug, title: allPosts[currentIndex + 1].data.title }
+    : null;
+  next = currentIndex > 0
+    ? { slug: allPosts[currentIndex - 1].slug, title: allPosts[currentIndex - 1].data.title }
+    : null;
+}
+---
+<PostLayout
+  title={post.data.title}
+  description={post.data.description}
+  date={post.data.date}
+  prev={prev}
+  next={next}
+>
+  <Content />
+</PostLayout>
